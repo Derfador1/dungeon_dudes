@@ -26,6 +26,7 @@ class Monster(Character):
 	def __str__(self):
 		output = 'Name: {0}; Health: {1};'.format(self._name, self._health)
 		return output
+		
 class Hero(Character):
 	def __init__(self, name, health, bag_size):
 		super().__init__(name, health)
@@ -45,5 +46,6 @@ class Location:
 			
 	def __str__(self):
 		output = 'Room of {0}'.format(self._r_name)
+		return output
 		
 
