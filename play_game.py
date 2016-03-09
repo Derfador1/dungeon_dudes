@@ -29,7 +29,8 @@ def main():
 		name_list = ['Doom', 'Poop', 'Apples']
 		rand_name = random.randint(0,2)
 		
-		print('Room of',name_list[rand_name], 'BEGIN!')
+		room = d.Location(name_list[rand_name])
+		print(room)
 		
 		menu = {'1':'List items in loot bag', '2':'Attack monster', '3':'Move to next location', '4':'List remaining health', '5':'List health for monster'}
 		
