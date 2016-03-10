@@ -50,9 +50,9 @@ def main():
 				#break
 			
 			menu = {'1':'List items in loot bag', '2':'Attack monster',
-						'3':'Move to next location', 
-						'4':'List remaining health',
-						'5':'List health for monster', '6':'Quit'}
+					'3':'Move to next location', 
+					'4':'List remaining health',
+					'5':'List health for monster', '6':'Quit'}
 			
 			options = list(menu.keys())
 			options.sort()
@@ -77,6 +77,9 @@ def main():
 				print(hero1._health)
 			elif selection == '5':
 				print(monster._health)
+			elif selection == '6':
+				print('Quitting...')
+				exit(1)
 			else:
 				print('Unknown option selected')		
 	
