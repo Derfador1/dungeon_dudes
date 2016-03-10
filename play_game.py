@@ -53,18 +53,20 @@ def main():
 	num = 0
 
 	while num < location_num:
-		#mon_numb = random.randint(1,3)
+		mon_numb = random.randint(1,3)
 		treasure_numb = random.randint(0,1)
 				
 		room = d.Location()
 		monster = d.Monster(random.randint(1,3))
+		#monster1 = d.Monster(random.randint(1,3))
+		#monster2 = d.Monster(random.randint(1,3))
 				
 		m_initiative = monster.initiative()
 		h_initiative = hero1.initiative()
 
 		print(room)	
 		print(monster)
-		
+						
 		if m_initiative > h_initiative:
 			print('\nMonster wins initiative, it attacks')
 			max_m = find_max_m(monster)
@@ -81,7 +83,6 @@ def main():
 				
 				
 		while True:
-			print()
 			if hero1.char_death() == 'Dead':
 				print('Your Hero has died')
 				exit(1)
@@ -101,10 +102,9 @@ def main():
 			if selection == '1':
 				for item in hero1._lootbag:
 					print(item)		
-				#menu = input('Do you wish to use an item?')
 			elif selection == '2':
 				if monster.char_death() == 'Dead':
-					print('\nYou have killed the monster, move to next location')
+						print('\nYou have killed all the monsters, move to next location')
 				else:
 					max_m = find_max_m(monster)
 					max_h = find_max_h(hero1)
@@ -118,19 +118,28 @@ def main():
 						
 						monster_check(max_m, max_h, monster, hero1)
 					else:
-						print('You just killed the monster')
-						if treasure_numb == 1:
-							print('You found treasure')
-							treasure = random.randint(0,4)
-							hero1.treasure_find(treasure_list[treasure])
+						if mon_numb > 1:
+							print('\nYou have killed the monster, however there is another monster')
+							mon_numb -= 1
+							monster = d.Monster(random.randint(1,3))
 						else:
-							print('There was no treasure in this room')	
+							print('You just killed the monster')
+							if treasure_numb == 1:
+								print('You found treasure')
+								treasure = random.randint(0,4)
+								hero1.treasure_find(treasure_list[treasure])
+							else:
+								print('There was no treasure in this room')
 			elif selection == '3':
-				if monster.char_death() == 'Dead':
-					num += 1
-					break
+				if mon_numb == 1:
+					if monster.char_death() == 'Dead':
+						num += 1
+						break
+					else:
+						print('You still need to fight the monster before you!')
 				else:
-					print('You still need to fight the monster before you!')
+					print('There are multiple monsters left')
+					
 			elif selection == '4':
 				print('\nRemaining hero health:', hero1._health)
 			elif selection == '5':
@@ -141,7 +150,7 @@ def main():
 			else:
 				print('Unknown option selected')
 				
-		print('You have won in this Dungeon')		
+	print('You have won in this Dungeon')		
 	
 if __name__ == "__main__":
 	main()
