@@ -46,8 +46,12 @@ def main():
 		h_initiative = hero1.initiative()
 		
 		print(monster)
+		
+		treasure = 'Sword'
+		treasure1 = 'Sword 2'
 
-		if m_initiative >= h_initiative:
+
+		if m_initiative > h_initiative:
 			print('\nMonster wins initiative, it attacks')
 			max_m = find_max_m(monster)
 			max_h = find_max_h(hero1)
@@ -81,7 +85,10 @@ def main():
 			selection = input("\nChoose an option: ")
 			
 			if selection == '1':
-				print('1')
+				hero1.treasure_find(treasure)
+				hero1.treasure_find(treasure1)
+				for item in hero1._lootbag:
+					print(item)
 			elif selection == '2':
 				if monster.char_death() == 'Dead':
 					print('\nYou have killed the monster, move to next location')
@@ -112,7 +119,7 @@ def main():
 					num += 1
 					break
 				else:
-					print('You still need fight the monster before you!')
+					print('You still need to fight the monster before you!')
 			elif selection == '4':
 				print('\nRemaining hero health:', hero1._health)
 			elif selection == '5':
