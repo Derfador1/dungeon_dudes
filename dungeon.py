@@ -16,9 +16,15 @@ class Character:
 		output = 'Dead'
 		if self._health == 0:
 			return output
+		
+	def roll_atk(self):
+		dice1 = random.randint(0,6)
+		dice2 = random.randint(0,6)
+		dice3 = random.randint(0,6)
+		dict1 = {'1':dice1, '2':dice2, '3':dice3}
+		return dict1
 			
 	def attack(self, other):
-		#3 dice roles to see who wins the attack
 		other._health -= 1
 		
 class Monster(Character):
