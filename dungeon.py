@@ -17,8 +17,9 @@ class Character:
 		if self._health == 0:
 			return output
 			
-	#def attack():
+	def attack(self, other):
 		#3 dice roles to see who wins the attack
+		other._health -= 1
 		
 class Monster(Character):
 	def __init__(self, health):
