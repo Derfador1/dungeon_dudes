@@ -38,8 +38,22 @@ def main():
 		
 		if m_initiative >= h_initiative:
 			print('Monster wins initiative, it attacks')
-			#monster rolls attack
-			hero1.defend()
+					
+			dict_m = monster.roll_atk()
+			set_m = set(dict_m.values())
+			max_m = max(set_m)
+			print(max_m)
+			
+			dict_h = hero1.roll_atk()
+			set_h = set(dict_h.values())
+			max_h = max(set_h)
+			print(max_h)
+			
+			if max_m > max_h:
+				print('Hero gets hit')
+				monster.attack(hero1)
+			
+			
 
 		while True:
 			print()
@@ -64,15 +78,16 @@ def main():
 			if selection == '1':
 				print('1')
 			elif selection == '2':
-				hero1.attack(monster)
 				if monster.char_death() == 'Dead':
 					print('\nYou have killed the monster, move to next location\n')
+				else:
+					hero1.attack(monster)
 			elif selection == '3':
 				if monster.char_death() == 'Dead':
 					num += 1
 					break
 				else:
-					print('You are still fighting')
+					print('You still need fight the monster before you!')
 			elif selection == '4':
 				print('\nRemaining hero health:', hero1._health, '\n')
 			elif selection == '5':
