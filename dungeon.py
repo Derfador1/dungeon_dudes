@@ -1,4 +1,7 @@
 import random
+import time
+
+random.seed(time.time())
 
 class Character:
 	def __init__(self, name, health): #health would be "health"; would pass in health = 10
@@ -19,8 +22,8 @@ class Character:
 		
 class Monster(Character):
 	def __init__(self, health):
-		monster_name = ['Skeleton', 'Vampire', 'Werewolf', 'Sphinx']
-		m_name = random.randint(0,3)
+		monster_name = ['Skeleton', 'Vampire', 'Werewolf', 'Sphinx', 'Goblin', 'Mummy']
+		m_name = random.randint(0,5)
 		super().__init__(monster_name[m_name], health)
 		
 	def __str__(self):
@@ -39,10 +42,15 @@ class Hero(Character):
 	def __str__(self):
 		output = 'Name: {0}; Health: {1};'.format(self._name, self._health)
 		return output
+		
+	def defend(self):
+		self._health -= 1
 
 class Location:
-	def __init__(self, r_name):
-		self._r_name = r_name
+	def __init__(self):
+		name_list = ['Doom', 'Poop', 'Apples', 'Scorpions', 'Hupla', 'Paradise']
+		rand_name = random.randint(0,5)
+		self._r_name = name_list[rand_name]
 			
 	def __str__(self):
 		output = 'Room of {0}'.format(self._r_name)
