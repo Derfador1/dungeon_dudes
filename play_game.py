@@ -28,6 +28,8 @@ def main():
 	#start
 	
 	hero_name = ['Ash', 'Naruto', 'Ichigo', 'One Punch Man', 'Scooby Doo']
+	treasure_list = ['Sword','Bow','Dagger','Gold','Poop']
+	treasure = random.randint(0,4)
 	name = random.randint(0,4)
 	
 	hero1 = d.Hero(hero_name[name], 10, 10)
@@ -47,10 +49,6 @@ def main():
 		
 		print(monster)
 		
-		treasure = 'Sword'
-		treasure1 = 'Sword 2'
-
-
 		if m_initiative > h_initiative:
 			print('\nMonster wins initiative, it attacks')
 			max_m = find_max_m(monster)
@@ -63,6 +61,8 @@ def main():
 				print('Hero wins roll')
 		else:
 			print('Hero wins initiative')
+			
+		
 			
 		while True:
 			print()
@@ -85,8 +85,6 @@ def main():
 			selection = input("\nChoose an option: ")
 			
 			if selection == '1':
-				hero1.treasure_find(treasure)
-				hero1.treasure_find(treasure1)
 				for item in hero1._lootbag:
 					print(item)
 			elif selection == '2':
@@ -113,7 +111,10 @@ def main():
 						else:
 							print('Hero wins roll')
 					else:
-						print('You just killed the monster')
+						print('You just killed the monster and you found treasure')
+						hero1.treasure_find(treasure_list[treasure])
+
+						
 			elif selection == '3':
 				if monster.char_death() == 'Dead':
 					num += 1
