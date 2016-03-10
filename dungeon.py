@@ -53,9 +53,6 @@ class Hero(Character):
 	def __str__(self):
 		output = 'Name: {0}; Health: {1};'.format(self._name, self._health)
 		return output
-		
-	def defend(self):
-		self._health -= 1
 
 class Location:
 	def __init__(self):
