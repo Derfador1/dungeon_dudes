@@ -21,6 +21,7 @@ def main():
 	
 	num = 0
 	
+
 	while num < location_num:
 		#numb_mon = random.randint(1,3)
 		room = d.Location()
@@ -41,31 +42,38 @@ def main():
 			#rolls attack
 			hero1.defend()
 
-		
-		menu = {'1':'List items in loot bag', '2':'Attack monster', '3':'Move to next location', '4':'List remaining health', '5':'List health for monster'}
-		
-		options = list(menu.keys())
-		options.sort()
-		for entry in options:
-			print(entry, menu[entry])
+		while True:
+			if hero1.char_death() == 'Dead':
+				print('hDead')
+				#goto start
+				break
+			elif monster.char_death() == 'Dead':
+				print('mdead')
+				break
+			
+			menu = {'1':'List items in loot bag', '2':'Attack monster', '3':'Move to next location', '4':'List remaining health', '5':'List health for monster'}
+			
+			options = list(menu.keys())
+			options.sort()
+			for entry in options:
+				print(entry, menu[entry])
 
-		selection = input("Choose an option: ")
-		
-		if selection == '1':
-			print('1')
-		elif selection == '2':
-			print('2')
-		elif selection == '3':
-			print('3')
-		elif selection == '4':
-			print(hero1._health)
-		elif selection == '5':
-			print(monster._health)
-		else:
-			print('Unknown option selected')
-			break
-		
-		num += 1
+			selection = input("Choose an option: ")
+			
+			if selection == '1':
+				print('1')
+			elif selection == '2':
+				hero1.attack(monster)
+			elif selection == '3':
+				print('3')
+			elif selection == '4':
+				print(hero1._health)
+			elif selection == '5':
+				print(monster._health)
+			else:
+				print('Unknown option selected')
+			
+			num += 1
 		
 	
 if __name__ == "__main__":
