@@ -22,14 +22,29 @@ def find_max_h(hero1):
 	print('Hero rolls:', max_h)
 	return max_h
 	
+def monster_check(max_m, max_h, monster, hero1):
+	if max_m > max_h:
+		print('Monster wins, Hero takes damage')
+		monster.attack(hero1)
+	else:
+		print('Monster looses, Hero defends')
+		
+def hero_check(max_m, max_h, monster, hero1):
+	if max_h >= max_m:
+		print('Hero wins, Monster takes damage')
+		hero1.attack(monster)
+	else:
+		print('Hero looses, Monster defends')
+		
+
+
+
 def main():
 	print('Welcome to Dungeon Dudes\n')
 	
-	#start
-	
 	hero_name = ['Ash', 'Naruto', 'Ichigo', 'One Punch Man', 'Scooby Doo']
-	treasure_list = ['Sword','Bow','Dagger','Gold','Poop']
-	treasure = random.randint(0,4)
+	treasure_list = ['Sword','Bow','Dagger','Gold','Poop', 'Potion']
+
 	name = random.randint(0,4)
 	
 	hero1 = d.Hero(hero_name[name], 10, 10)
@@ -38,15 +53,16 @@ def main():
 	num = 0
 
 	while num < location_num:
-		#numb_mon = random.randint(1,3)
+		#mon_numb = random.randint(1,3)
+		treasure_numb = random.randint(0,1)
+				
 		room = d.Location()
 		monster = d.Monster(random.randint(1,3))
-		
-		print(room)
-		
+				
 		m_initiative = monster.initiative()
 		h_initiative = hero1.initiative()
-		
+
+		print(room)	
 		print(monster)
 		
 		if m_initiative > h_initiative:
@@ -54,23 +70,16 @@ def main():
 			max_m = find_max_m(monster)
 			max_h = find_max_h(hero1)
 			
-			if max_m > max_h:
-				print('Hero looses roll')
-				monster.attack(hero1)
-			else:
-				print('Hero wins roll')
+			monster_check(max_m, max_h, monster, hero1)
 		else:
 			print('Hero wins initiative')
 			
-		
 			
 		while True:
 			print()
-			
 			if hero1.char_death() == 'Dead':
 				print('\nYour Hero has died\n')
 				exit(1)
-				#goto start
 							
 			menu = {'1':'List items in loot bag', '2':'Attack monster',
 					'3':'Move to next location', 
@@ -86,7 +95,8 @@ def main():
 			
 			if selection == '1':
 				for item in hero1._lootbag:
-					print(item)
+					print(item)		
+				#menu = input('Do you wish to use an item?')
 			elif selection == '2':
 				if monster.char_death() == 'Dead':
 					print('\nYou have killed the monster, move to next location')
@@ -94,27 +104,22 @@ def main():
 					max_m = find_max_m(monster)
 					max_h = find_max_h(hero1)
 					
-					if max_h >= max_m:
-						print('Monster looses roll')
-						hero1.attack(monster)
-					else:
-						print('Monster wins roll')
+					hero_check(max_m, max_h, monster, hero1)
 					
 					if monster.char_death() != 'Dead':
 						print('\nMonster attacks back\n')
 						max_m = find_max_m(monster)
 						max_h = find_max_h(hero1)
 						
-						if max_m > max_h:
-							print('Hero looses roll')
-							monster.attack(hero1)
-						else:
-							print('Hero wins roll')
+						monster_check(max_m, max_h, monster, hero1)
 					else:
-						print('You just killed the monster and you found treasure')
-						hero1.treasure_find(treasure_list[treasure])
-
-						
+						print('You just killed the monster')
+						if treasure_numb == 1:
+							print('You found treasure')
+							treasure = random.randint(0,4)
+							hero1.treasure_find(treasure_list[treasure])
+						else:
+							print('There was no treasure in this room')	
 			elif selection == '3':
 				if monster.char_death() == 'Dead':
 					num += 1
@@ -129,7 +134,9 @@ def main():
 				print('Quitting...')
 				exit(1)
 			else:
-				print('Unknown option selected')		
+				print('Unknown option selected')
+				
+		print('You have won in this Dungeon')		
 	
 if __name__ == "__main__":
 	main()
