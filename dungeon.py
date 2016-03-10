@@ -4,7 +4,7 @@ import time
 random.seed(time.time())
 
 class Character:
-	def __init__(self, name, health): #health would be "health"; would pass in health = 10
+	def __init__(self, name, health): 
 		self._name = name
 		self._health = health
 	
@@ -54,7 +54,7 @@ class Location:
 		self._r_name = name_list[rand_name]
 			
 	def __str__(self):
-		output = 'Room of {0}'.format(self._r_name)
+		output = '\nRoom of {0}'.format(self._r_name)
 		return output
 		
 
