@@ -44,10 +44,11 @@ class Hero(Character):
 		self._lootbag = []
 		
 	def treasure_find(self, treasure):
+		output = 'Your lootbag is full\n'
 		if len(self._lootbag) < 10 :
 			self._lootbag.append(treasure)
 		else:
-			print('Your lootbag is full\n')
+			return output
 		
 
 	def __str__(self):
