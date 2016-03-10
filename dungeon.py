@@ -41,10 +41,15 @@ class Hero(Character):
 	def __init__(self, name, health, bag_size):
 		super().__init__(name, health)
 		self._bag_size = bag_size
-		self._lootbag = ['Empty'] * self._bag_size
+		#self._lootbag = ['Empty'] * self._bag_size
+		self._lootbag = []
 		
 	def treasure_find(self, treasure):
-		self._lootbag.append(treasure)
+		if len(self._lootbag) <= 10 :
+			self._lootbag.append(treasure)
+		else:
+			print('Your lootbag is full\n')
+		
 
 	def __str__(self):
 		output = 'Name: {0}; Health: {1};'.format(self._name, self._health)
