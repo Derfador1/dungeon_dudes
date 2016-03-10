@@ -37,21 +37,22 @@ def main():
 		print('Hero:', h_initiative)
 		
 		
-		if m_initiative > h_initiative:
+		if m_initiative >= h_initiative:
 			print('Monster wins initiative, it attacks')
-			#rolls attack
+			#monster rolls attack
 			hero1.defend()
 
 		while True:
 			if hero1.char_death() == 'Dead':
-				print('hDead')
+				print('Your Hero has died')
+				exit(1)
 				#goto start
-				break
-			elif monster.char_death() == 'Dead':
-				print('mdead')
-				break
+				#break
 			
-			menu = {'1':'List items in loot bag', '2':'Attack monster', '3':'Move to next location', '4':'List remaining health', '5':'List health for monster'}
+			menu = {'1':'List items in loot bag', '2':'Attack monster',
+						'3':'Move to next location', 
+						'4':'List remaining health',
+						'5':'List health for monster', '6':'Quit'}
 			
 			options = list(menu.keys())
 			options.sort()
@@ -64,17 +65,20 @@ def main():
 				print('1')
 			elif selection == '2':
 				hero1.attack(monster)
+				if monster.char_death() == 'Dead':
+					print('You have killed the monster, move to next location')
 			elif selection == '3':
-				print('3')
+				if monster.char_death() == 'Dead':
+					num += 1
+					break
+				else:
+					print('You are still fighting')
 			elif selection == '4':
 				print(hero1._health)
 			elif selection == '5':
 				print(monster._health)
 			else:
-				print('Unknown option selected')
-			
-			num += 1
-		
+				print('Unknown option selected')		
 	
 if __name__ == "__main__":
 	main()
