@@ -72,13 +72,18 @@ def main():
 			
 			monster_check(max_m, max_h, monster, hero1)
 		else:
-			print('Hero wins initiative')
-			
-			
+			choice = input('Hero wins initiative, Do you wish to skip this fight?(y or n)')
+			if choice == 'y':
+				print('Proceeding...')
+				continue
+			elif choice	== 'n':
+				print('Entering Menu...')
+				
+				
 		while True:
 			print()
 			if hero1.char_death() == 'Dead':
-				print('\nYour Hero has died\n')
+				print('Your Hero has died')
 				exit(1)
 							
 			menu = {'1':'List items in loot bag', '2':'Attack monster',
