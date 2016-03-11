@@ -36,8 +36,11 @@ def hero_check(max_m, max_h, monster, hero1):
 	else:
 		print('Hero looses, Monster defends')
 
-#def menu_print(menu):
-
+def menu_print(menu):
+	options = list(menu.keys())
+	options.sort()
+	for entry in options:
+		print(entry, menu[entry])
 
 def main():
 	print('Welcome to Dungeon Dudes\n')
@@ -115,11 +118,7 @@ def main():
 				'6':'Quit'
 				}
 			
-			#menu_print(menu)
-			options = list(menu.keys())
-			options.sort()
-			for entry in options:
-				print(entry, menu[entry])
+			menu_print(menu)
 
 			selection = input("\nChoose an option: ")
 			
