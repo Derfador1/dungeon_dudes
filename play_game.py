@@ -9,6 +9,7 @@ random.seed(time.time())
 
 num_of_loc = 10
 
+
 def find_max_mdice(monster):
 	dict_m = monster.mon_roll_atk()
 	set_m = set(dict_m.values())
@@ -57,11 +58,31 @@ def potion_remove(hero1):
 			
 def lootbag_print(hero1):
 	if not len(hero1._lootbag):
-		print('Nothing yet')
+		print('Nothing at the moment')
 		
 	for item in hero1._lootbag:
 		print(item)
 					
+def atk_func(monster, hero1, potion_true):
+	#print(mon_numb)
+
+	max_m = find_max_mdice(monster)
+	max_h = find_max_hdice(hero1)
+						
+	if potion_true == 1:
+		max_h += 1
+		print('Potion activated new roll:', max_h)
+	
+	hero_check(max_m, max_h, monster, hero1)
+
+def treasure_check(treasure_list, treasure_numb, hero1):
+	print('You just killed the last monster')
+	if treasure_numb == 1:
+		print('You found treasure')
+		treasure = random.randint(0,5)
+		hero1.treasure_find(treasure_list[treasure])
+	else:
+		print('There was no treasure in this room')
 
 def main():
 	print('Welcome to Dungeon Dudes\n')
@@ -80,7 +101,7 @@ def main():
 		'Ichigo','One Punch Man',
 		'Scooby Doo'
 		]
-		
+
 	treasure_list = [
 		'Atk Potion', 'Poison Dagger',
 		'Sword of Doom', 'Shield of Weakness',
@@ -169,18 +190,11 @@ def main():
 					potion_remove(hero1)
 			elif selection == '2':
 				os.system('clear')
+
 				if monster.char_death() == 'Dead':
 						print('You have killed all the monsters, move to next location')
 				else:
-					max_m = find_max_mdice(monster)
-					max_h = find_max_hdice(hero1)
-										
-					if potion_true == 1:
-						max_h += 1
-						print('Potion activated new roll:', max_h)
-					
-					hero_check(max_m, max_h, monster, hero1)
-					
+					atk_func(monster, hero1, potion_true)
 					if monster.char_death() != 'Dead':
 						print('\nMonster attacks back\n')
 						max_m = find_max_mdice(monster)
@@ -194,13 +208,8 @@ def main():
 							monster = d.Monster(random.randint(1,3), random.randint(1,3))
 							print('Next monster ->', monster)
 						else:
-							print('You just killed the last monster')
-							if treasure_numb == 1:
-								print('You found treasure')
-								treasure = random.randint(0,5)
-								hero1.treasure_find(treasure_list[treasure])
-							else:
-								print('There was no treasure in this room')
+							treasure_check(treasure_list, treasure_numb, hero1)
+								
 					potion_true = 0
 			elif selection == '3':
 				os.system('clear')
