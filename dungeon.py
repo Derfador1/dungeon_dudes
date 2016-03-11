@@ -39,7 +39,7 @@ class Monster(Character):
 			dice = random.randint(1,6)
 			dict1.update({dice_num:dice})
 			dice_num += 1
-
+			
 		return dict1
 		
 	def __str__(self):
@@ -47,17 +47,12 @@ class Monster(Character):
 		return output
 		
 class Hero(Character):
-	def __init__(self, name, health, bag_size):
+	def __init__(self, name, health):
 		super().__init__(name, health)
-		self._bag_size = bag_size
 		self._lootbag = []
 		
 	def treasure_find(self, treasure):
-		output = 'Your lootbag is full\n'
-		if len(self._lootbag) < self._bag_size :
-			self._lootbag.append(treasure)
-		else:
-			print(output)
+		self._lootbag.append(treasure)
 			
 	def hero_roll_atk(self):
 		dice1 = random.randint(1,6)
