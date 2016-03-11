@@ -6,17 +6,17 @@ import dungeon as d
 
 random.seed(time.time())
 
-location_num = 10
+num_of_loc = 10
 
-def find_max_m(monster):
-	dict_m = monster.roll_atk()
+def find_max_mdice(monster):
+	dict_m = monster.mon_roll_atk()
 	set_m = set(dict_m.values())
 	max_m = max(set_m)
 	print('Monster rolls:', max_m)
 	return max_m
 	
-def find_max_h(hero1):
-	dict_h = hero1.roll_atk()
+def find_max_hdice(hero1):
+	dict_h = hero1.hero_roll_atk()
 	set_h = set(dict_h.values())
 	max_h = max(set_h)
 	print('Hero rolls:', max_h)
@@ -24,17 +24,17 @@ def find_max_h(hero1):
 	
 def monster_check(max_m, max_h, monster, hero1):
 	if max_m >= max_h:
-		print('Monster wins, Hero takes damage')
+		print('Monster wins, Hero takes damage\n')
 		monster.attack(hero1)
 	else:
-		print('Monster looses, Hero defends')
+		print('Monster looses, Hero defends\n')
 		
 def hero_check(max_m, max_h, monster, hero1):
 	if max_h >= max_m:
-		print('Hero wins, Monster takes damage')
+		print('Hero wins, Monster takes damage\n')
 		hero1.attack(monster)
 	else:
-		print('Hero looses, Monster defends')
+		print('Hero looses, Monster defends\n')
 
 def menu_print(menu):
 	options = list(menu.keys())
@@ -72,14 +72,14 @@ def main():
 	hero1 = d.Hero(hero_name[name], 10, 10)
 	print(hero1)
 	
-	num = 0
+	num = 1
 
-	while num < location_num:
+	while num <= num_of_loc:
 		mon_numb = random.randint(1,3)
 		treasure_numb = random.randint(0,1)
 				
 		room = d.Location()
-		monster = d.Monster(random.randint(1,3))
+		monster = d.Monster(random.randint(1,3), random.randint(1,3))
 				
 		m_initiative = monster.initiative()
 		h_initiative = hero1.initiative()
@@ -89,14 +89,15 @@ def main():
 						
 		if m_initiative > h_initiative:
 			print('\nMonster wins initiative, it attacks')
-			max_m = find_max_m(monster)
-			max_h = find_max_h(hero1)
+			max_m = find_max_mdice(monster)
+			max_h = find_max_hdice(hero1)
 			
 			monster_check(max_m, max_h, monster, hero1)
 		else:
 			choice = input('Hero wins initiative, Do you wish to skip this fight?(y or n)')
 			if choice == 'y':
-				print('Proceeding in sneak mode...')
+				print('Proceeding in sneak mode to next room...')
+				num += 1
 				continue
 			elif choice	== 'n':
 				print('Entering Menu...')
@@ -106,7 +107,7 @@ def main():
 				
 		while True:
 			if hero1.char_death() == 'Dead':
-				print('Your Hero has died')
+				print('Your Hero made it to level', num)
 				exit(1)
 							
 			menu = {
@@ -129,22 +130,22 @@ def main():
 				if monster.char_death() == 'Dead':
 						print('\nYou have killed all the monsters, move to next location')
 				else:
-					max_m = find_max_m(monster)
-					max_h = find_max_h(hero1)
+					max_m = find_max_mdice(monster)
+					max_h = find_max_hdice(hero1)
 					
 					hero_check(max_m, max_h, monster, hero1)
 					
 					if monster.char_death() != 'Dead':
 						print('\nMonster attacks back\n')
-						max_m = find_max_m(monster)
-						max_h = find_max_h(hero1)
+						max_m = find_max_mdice(monster)
+						max_h = find_max_hdice(hero1)
 						
 						monster_check(max_m, max_h, monster, hero1)
 					else:
 						if mon_numb > 1:
 							print('\nYou have killed the monster, however there is another monster')
 							mon_numb -= 1
-							monster = d.Monster(random.randint(1,3))
+							monster = d.Monster(random.randint(1,3), random.randint(1,3))
 							print('Next monster ->', monster)
 						else:
 							print('You just killed the monster')
