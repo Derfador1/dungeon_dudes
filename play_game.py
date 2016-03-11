@@ -58,8 +58,6 @@ def main():
 				
 		room = d.Location()
 		monster = d.Monster(random.randint(1,3))
-		#monster1 = d.Monster(random.randint(1,3))
-		#monster2 = d.Monster(random.randint(1,3))
 				
 		m_initiative = monster.initiative()
 		h_initiative = hero1.initiative()
@@ -76,10 +74,12 @@ def main():
 		else:
 			choice = input('Hero wins initiative, Do you wish to skip this fight?(y or n)')
 			if choice == 'y':
-				print('Proceeding...')
+				print('Proceeding in sneak mode...')
 				continue
 			elif choice	== 'n':
 				print('Entering Menu...')
+			else:
+				print('Incorrect option...begin fighting')
 				
 				
 		while True:
