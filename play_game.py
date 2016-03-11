@@ -12,14 +12,14 @@ def find_max_mdice(monster):
 	dict_m = monster.mon_roll_atk()
 	set_m = set(dict_m.values())
 	max_m = max(set_m)
-	print('Monster rolls:', max_m)
+	print('Monsters highest dice roll:', max_m)
 	return max_m
 	
 def find_max_hdice(hero1):
 	dict_h = hero1.hero_roll_atk()
 	set_h = set(dict_h.values())
 	max_h = max(set_h)
-	print('Hero rolls:', max_h)
+	print('Hero highest dice roll:', max_h)
 	return max_h
 	
 def monster_check(max_m, max_h, monster, hero1):
@@ -69,7 +69,7 @@ def main():
 
 	name = random.randint(0,4)
 	
-	hero1 = d.Hero(hero_name[name], 10, 10)
+	hero1 = d.Hero(hero_name[name], 10)
 	print(hero1)
 	
 	num = 1
