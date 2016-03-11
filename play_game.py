@@ -85,6 +85,8 @@ def treasure_check(treasure_list, treasure_numb, hero1):
 		print('There was no treasure in this room')
 
 def main():
+	os.system('clear')
+
 	print('Welcome to Dungeon Dudes\n')
 	
 	print('You are a world renowned fighter who '
@@ -127,9 +129,7 @@ def main():
 				
 		m_initiative = monster.initiative()
 		h_initiative = hero1.initiative()
-
-		os.system('clear')
-
+	
 		print(room)	
 		print(monster)		
 						
@@ -233,6 +233,7 @@ def main():
 				print('Quitting...')
 				exit(1)
 			else:
+				os.system('clear')
 				print('Unknown option selected')
 			
 			print()
