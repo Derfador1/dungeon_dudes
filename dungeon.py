@@ -29,7 +29,12 @@ class Character:
 		
 class Monster(Character):
 	def __init__(self, health):
-		monster_name = ['Skeleton', 'Vampire', 'Werewolf', 'Sphinx', 'Goblin', 'Mummy']
+		monster_name = [
+			'Skeleton','Vampire',
+			'Werewolf','Sphinx',
+			'Goblin','Mummy'
+			]
+			
 		m_name = random.randint(0,5)
 		super().__init__(monster_name[m_name], health)
 		
@@ -45,7 +50,7 @@ class Hero(Character):
 		
 	def treasure_find(self, treasure):
 		output = 'Your lootbag is full\n'
-		if len(self._lootbag) > 10 :
+		if len(self._lootbag) < self._bag_size :
 			self._lootbag.append(treasure)
 		else:
 			print(output)
@@ -56,7 +61,12 @@ class Hero(Character):
 
 class Location:
 	def __init__(self):
-		name_list = ['Doom', 'Poop', 'Apples', 'Scorpions', 'Hupla', 'Paradise']
+		name_list = [
+			'Doom','Poop',
+			'Apples','Scorpions',
+			'Hupla','Paradise'
+			]
+			
 		rand_name = random.randint(0,5)
 		self._r_name = name_list[rand_name]
 			
