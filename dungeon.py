@@ -16,19 +16,12 @@ class Character:
 		output = 'Dead'
 		if self._health == 0:
 			return output
-		
-	def roll_atk(self):
-		dice1 = random.randint(0,6)
-		dice2 = random.randint(0,6)
-		dice3 = random.randint(0,6)
-		dict1 = {'1':dice1, '2':dice2, '3':dice3}
-		return dict1
 			
 	def attack(self, other):
 		other._health -= 1
 		
 class Monster(Character):
-	def __init__(self, health):
+	def __init__(self, health, atk):
 		monster_name = [
 			'Skeleton','Vampire',
 			'Werewolf','Sphinx',
@@ -37,9 +30,20 @@ class Monster(Character):
 			
 		m_name = random.randint(0,5)
 		super().__init__(monster_name[m_name], health)
+		self._atk = atk
+		
+	def mon_roll_atk(self):
+		dice_num = 1
+		dict1 = {}
+		while dice_num <= self._atk:
+			dice = random.randint(1,6)
+			dict1.update({dice_num:dice})
+			dice_num += 1
+
+		return dict1
 		
 	def __str__(self):
-		output = 'Name: {0}; Health: {1};'.format(self._name, self._health)
+		output = 'Name: {0}; Health: {1}; Atk: {2}'.format(self._name, self._health, self._atk)
 		return output
 		
 class Hero(Character):
@@ -54,6 +58,13 @@ class Hero(Character):
 			self._lootbag.append(treasure)
 		else:
 			print(output)
+			
+	def hero_roll_atk(self):
+		dice1 = random.randint(1,6)
+		dice2 = random.randint(1,6)
+		dice3 = random.randint(1,6)
+		dict1 = {'1':dice1, '2':dice2, '3':dice3}
+		return dict1
 
 	def __str__(self):
 		output = 'Name: {0}; Health: {1};'.format(self._name, self._health)
