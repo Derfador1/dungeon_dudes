@@ -2,6 +2,7 @@
 
 import random
 import time
+import os
 import dungeon as d
 
 random.seed(time.time())
@@ -44,15 +45,23 @@ def menu_print(menu):
 
 def check_lootbag(hero1):
 		for item in hero1._lootbag:
-			if item == 'Potion':
+			if item == 'Atk Potion':
 				return True
 		
 		return False
 		
 def potion_remove(hero1):
 	for item in hero1._lootbag:
-		if item == 'Potion':
+		if item == 'Atk Potion':
 			hero1._lootbag.remove(item)
+			
+def lootbag_print(hero1):
+	if not len(hero1._lootbag):
+		print('Nothing yet')
+		
+	for item in hero1._lootbag:
+		print(item)
+					
 
 def main():
 	print('Welcome to Dungeon Dudes\n')
@@ -72,7 +81,12 @@ def main():
 		'Scooby Doo'
 		]
 		
-	treasure_list = ['Potion']
+	treasure_list = [
+		'Atk Potion', 'Poison Dagger',
+		'Sword of Doom', 'Shield of Weakness',
+		'Poop(the hell did you pick this up for!?!?!)',
+		'Gold'
+		]
 
 	name = random.randint(0,4)
 	
@@ -93,8 +107,10 @@ def main():
 		m_initiative = monster.initiative()
 		h_initiative = hero1.initiative()
 
+		os.system('clear')
+
 		print(room)	
-		print(monster)
+		print(monster)		
 						
 		if m_initiative > h_initiative:
 			print('\nMonster wins initiative, it attacks')
@@ -119,7 +135,7 @@ def main():
 			if hero1.char_death() == 'Dead':
 				print('Your Hero made it to level', num)
 				exit(1)
-							
+										
 			menu = {
 				'1':'List items in loot bag',
 				'2':'Attack monster',
@@ -133,12 +149,13 @@ def main():
 
 			selection = input("\nChoose an option: ")
 			if selection == '1':
-				for item in hero1._lootbag:
-					print(item)
-					
+				os.system('clear')
+				
+				lootbag_print(hero1)
+				
 				if check_lootbag(hero1):
 					while True:
-						select = input('Do you wish to use potion?(y or n): ')
+						select = input('Do you wish to use atk potion?(y or n): ')
 						if select == 'y':
 							potion_true = 1
 							break
@@ -151,6 +168,7 @@ def main():
 				if potion_true == 1:
 					potion_remove(hero1)
 			elif selection == '2':
+				os.system('clear')
 				if monster.char_death() == 'Dead':
 						print('You have killed all the monsters, move to next location')
 				else:
@@ -176,15 +194,16 @@ def main():
 							monster = d.Monster(random.randint(1,3), random.randint(1,3))
 							print('Next monster ->', monster)
 						else:
-							print('You just killed the monster')
+							print('You just killed the last monster')
 							if treasure_numb == 1:
 								print('You found treasure')
-								treasure = random.randint(0,4)
-								hero1.treasure_find(treasure_list[0])
+								treasure = random.randint(0,5)
+								hero1.treasure_find(treasure_list[treasure])
 							else:
 								print('There was no treasure in this room')
 					potion_true = 0
 			elif selection == '3':
+				os.system('clear')
 				if mon_numb == 1:
 					if monster.char_death() == 'Dead':
 						num += 1
@@ -195,17 +214,19 @@ def main():
 					print('There are multiple monsters left')
 					
 			elif selection == '4':
+				os.system('clear')
 				print('Remaining hero health:', hero1._health)
 			elif selection == '5':
+				os.system('clear')
 				print('Remaining monster health:', monster._health)
 			elif selection == '6':
+				os.system('clear')
 				print('Quitting...')
 				exit(1)
 			else:
 				print('Unknown option selected')
 			
 			print()
-
 				
 	print('You have won in this Dungeon')		
 	
