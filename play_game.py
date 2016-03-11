@@ -42,7 +42,7 @@ def menu_print(menu):
 	for entry in options:
 		print(entry, menu[entry])
 
-def check_lootbag(hero1, potion_true):
+def check_lootbag(hero1):
 		for item in hero1._lootbag:
 			if item == 'Potion':
 				return True
@@ -80,6 +80,8 @@ def main():
 	print(hero1)
 	
 	num = 1
+	
+	potion_true = 0
 
 	while num <= num_of_loc:
 		mon_numb = random.randint(1,3)
@@ -112,10 +114,8 @@ def main():
 				print('Entering Menu...\n')
 			else:
 				print('Incorrect option...begin fighting\n')
-				
-		while True:	
-			potion_true = 0
-					
+						
+		while True:		
 			if hero1.char_death() == 'Dead':
 				print('Your Hero made it to level', num)
 				exit(1)
@@ -135,16 +135,31 @@ def main():
 			if selection == '1':
 				for item in hero1._lootbag:
 					print(item)
+					
+				if check_lootbag(hero1):
+					while True:
+						select = input('Do you wish to use potion?(y or n): ')
+						if select == 'y':
+							potion_true = 1
+							break
+						elif select == 'n':
+							potion_true = 0
+							break
+						else:
+							print('That was not proper input')
+											
+				if potion_true == 1:
+					potion_remove(hero1)
 			elif selection == '2':
 				if monster.char_death() == 'Dead':
 						print('You have killed all the monsters, move to next location')
 				else:
 					max_m = find_max_mdice(monster)
 					max_h = find_max_hdice(hero1)
-					
+										
 					if potion_true == 1:
-						print('here')
-						max_h += 10
+						max_h += 1
+						print('Potion activated new roll:', max_h)
 					
 					hero_check(max_m, max_h, monster, hero1)
 					
@@ -168,6 +183,7 @@ def main():
 								hero1.treasure_find(treasure_list[0])
 							else:
 								print('There was no treasure in this room')
+					potion_true = 0
 			elif selection == '3':
 				if mon_numb == 1:
 					if monster.char_death() == 'Dead':
@@ -189,7 +205,7 @@ def main():
 				print('Unknown option selected')
 			
 			print()
-			potion_true = 0
+
 				
 	print('You have won in this Dungeon')		
 	
