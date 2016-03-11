@@ -24,23 +24,35 @@ def find_max_hdice(hero1):
 	
 def monster_check(max_m, max_h, monster, hero1):
 	if max_m >= max_h:
-		print('Monster wins, Hero takes damage\n')
+		print('Monster wins, Hero takes damage')
 		monster.attack(hero1)
 	else:
-		print('Monster looses, Hero defends\n')
+		print('Monster looses, Hero defends')
 		
 def hero_check(max_m, max_h, monster, hero1):
 	if max_h >= max_m:
-		print('Hero wins, Monster takes damage\n')
+		print('Hero wins, Monster takes damage')
 		hero1.attack(monster)
 	else:
-		print('Hero looses, Monster defends\n')
+		print('Hero looses, Monster defends')
 
 def menu_print(menu):
 	options = list(menu.keys())
 	options.sort()
 	for entry in options:
 		print(entry, menu[entry])
+
+def check_lootbag(hero1, potion_true):
+		for item in hero1._lootbag:
+			if item == 'Potion':
+				return True
+		
+		return False
+		
+def potion_remove(hero1):
+	for item in hero1._lootbag:
+		if item == 'Potion':
+			hero1._lootbag.remove(item)
 
 def main():
 	print('Welcome to Dungeon Dudes\n')
@@ -60,12 +72,7 @@ def main():
 		'Scooby Doo'
 		]
 		
-	treasure_list = [
-		'Sword','Bow',
-		'Dagger','Gold',
-		'Poop(the hell did you pick this up for!?!?!)',
-		'Potion'
-		]
+	treasure_list = ['Potion']
 
 	name = random.randint(0,4)
 	
@@ -93,19 +100,22 @@ def main():
 			max_h = find_max_hdice(hero1)
 			
 			monster_check(max_m, max_h, monster, hero1)
+			
+			print()
 		else:
 			choice = input('Hero wins initiative, Do you wish to skip this fight?(y or n)')
 			if choice == 'y':
-				print('Proceeding in sneak mode to next room...')
+				print('Proceeding in sneak mode to next room...\n')
 				num += 1
 				continue
 			elif choice	== 'n':
-				print('Entering Menu...')
+				print('Entering Menu...\n')
 			else:
-				print('Incorrect option...begin fighting')
+				print('Incorrect option...begin fighting\n')
 				
-				
-		while True:
+		while True:	
+			potion_true = 0
+					
 			if hero1.char_death() == 'Dead':
 				print('Your Hero made it to level', num)
 				exit(1)
@@ -122,16 +132,19 @@ def main():
 			menu_print(menu)
 
 			selection = input("\nChoose an option: ")
-			
 			if selection == '1':
 				for item in hero1._lootbag:
-					print(item)		
+					print(item)
 			elif selection == '2':
 				if monster.char_death() == 'Dead':
-						print('\nYou have killed all the monsters, move to next location')
+						print('You have killed all the monsters, move to next location')
 				else:
 					max_m = find_max_mdice(monster)
 					max_h = find_max_hdice(hero1)
+					
+					if potion_true == 1:
+						print('here')
+						max_h += 10
 					
 					hero_check(max_m, max_h, monster, hero1)
 					
@@ -152,7 +165,7 @@ def main():
 							if treasure_numb == 1:
 								print('You found treasure')
 								treasure = random.randint(0,4)
-								hero1.treasure_find(treasure_list[treasure])
+								hero1.treasure_find(treasure_list[0])
 							else:
 								print('There was no treasure in this room')
 			elif selection == '3':
@@ -166,16 +179,17 @@ def main():
 					print('There are multiple monsters left')
 					
 			elif selection == '4':
-				print('\nRemaining hero health:', hero1._health)
+				print('Remaining hero health:', hero1._health)
 			elif selection == '5':
-				print('\nRemaining monster health:', monster._health)
+				print('Remaining monster health:', monster._health)
 			elif selection == '6':
 				print('Quitting...')
 				exit(1)
 			else:
 				print('Unknown option selected')
-				
+			
 			print()
+			potion_true = 0
 				
 	print('You have won in this Dungeon')		
 	
