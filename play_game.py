@@ -23,7 +23,7 @@ def find_max_h(hero1):
 	return max_h
 	
 def monster_check(max_m, max_h, monster, hero1):
-	if max_m > max_h:
+	if max_m >= max_h:
 		print('Monster wins, Hero takes damage')
 		monster.attack(hero1)
 	else:
@@ -35,15 +35,34 @@ def hero_check(max_m, max_h, monster, hero1):
 		hero1.attack(monster)
 	else:
 		print('Hero looses, Monster defends')
-		
 
+#def menu_print(menu):
 
 
 def main():
 	print('Welcome to Dungeon Dudes\n')
 	
-	hero_name = ['Ash', 'Naruto', 'Ichigo', 'One Punch Man', 'Scooby Doo']
-	treasure_list = ['Sword','Bow','Dagger','Gold','Poop', 'Potion']
+	print('You are a world renowned fighter who '
+		  'has taken to searching dungeons!')
+		  
+	print('Many such dungeons are filled with monsters who '
+		  'will gladly strip your bones of all flesh...')
+		  
+	print('Let us see if the dungeons bless you with '
+		  'treasure or curse you with death!\n')
+	
+	hero_name = [
+		'Ash', 'Naruto',
+		'Ichigo','One Punch Man',
+		'Scooby Doo'
+		]
+		
+	treasure_list = [
+		'Sword','Bow',
+		'Dagger','Gold',
+		'Poop(the hell did you pick this up for!?!?!)',
+		'Potion'
+		]
 
 	name = random.randint(0,4)
 	
@@ -87,11 +106,16 @@ def main():
 				print('Your Hero has died')
 				exit(1)
 							
-			menu = {'1':'List items in loot bag', '2':'Attack monster',
-					'3':'Move to next location', 
-					'4':'List remaining health',
-					'5':'List health for monster', '6':'Quit'}
+			menu = {
+				'1':'List items in loot bag',
+				'2':'Attack monster',
+				'3':'Move to next location', 
+				'4':'List remaining health',
+				'5':'List health for monster',
+				'6':'Quit'
+				}
 			
+			#menu_print(menu)
 			options = list(menu.keys())
 			options.sort()
 			for entry in options:
@@ -122,6 +146,7 @@ def main():
 							print('\nYou have killed the monster, however there is another monster')
 							mon_numb -= 1
 							monster = d.Monster(random.randint(1,3))
+							print('Next monster ->', monster)
 						else:
 							print('You just killed the monster')
 							if treasure_numb == 1:
@@ -149,6 +174,8 @@ def main():
 				exit(1)
 			else:
 				print('Unknown option selected')
+				
+			print()
 				
 	print('You have won in this Dungeon')		
 	
