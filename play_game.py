@@ -9,28 +9,33 @@ random.seed(time.time())
 
 num_of_loc = 10
 
-
+# grabs the dictionary fron mon roll atk and casts it as a set
+# then finds the max of said set which is the value we want
 def find_max_mdice(monster):
 	dict_m = monster.mon_roll_atk()
 	set_m = set(dict_m.values())
 	max_m = max(set_m)
 	print('Monsters highest dice roll:', max_m)
 	return max_m
-	
+
+# grabs the dictionary fron hero roll atk and casts it as a set
+# then finds the max of said set which is the value we want	
 def find_max_hdice(hero1):
 	dict_h = hero1.hero_roll_atk()
 	set_h = set(dict_h.values())
 	max_h = max(set_h)
 	print('Hero highest dice roll:', max_h)
 	return max_h
-	
+
+# simple check for if monster attacks first	
 def monster_check(max_m, max_h, monster, hero1):
 	if max_m >= max_h:
 		print('Monster wins, Hero takes damage')
 		monster.attack(hero1)
 	else:
 		print('Monster looses, Hero defends')
-		
+
+# simple check for if hero attacks first			
 def hero_check(max_m, max_h, monster, hero1):
 	if max_h >= max_m:
 		print('Hero wins, Monster takes damage')
@@ -44,6 +49,7 @@ def menu_print(menu):
 	for entry in options:
 		print(entry, menu[entry])
 
+# checks to see if an atk potion is in the lootbag
 def check_lootbag(hero1):
 		for item in hero1._lootbag:
 			if item == 'Atk Potion':
@@ -64,13 +70,15 @@ def lootbag_print(hero1):
 		print(item)
 					
 def atk_func(monster, hero1, potion_true):
-	#print(mon_numb)
-
 	max_m = find_max_mdice(monster)
 	max_h = find_max_hdice(hero1)
-						
+	
+	# re rolls a new dice to see if a better value could be obtained
+	# only if a ption was used
 	if potion_true == 1:
-		max_h += 1
+		new_roll = random.randint(1,6)
+		if new_roll > max_h:
+			max_h = new_roll
 		print('Potion activated new roll:', max_h)
 	
 	hero_check(max_m, max_h, monster, hero1)
@@ -80,6 +88,7 @@ def treasure_check(treasure_list, treasure_numb, hero1):
 	if treasure_numb == 1:
 		print('You found treasure')
 		treasure = random.randint(0,5)
+		# if treasure_numb is 1, this is were we create and add treasure
 		hero1.treasure_find(treasure_list[treasure])
 	else:
 		print('There was no treasure in this room')
@@ -121,7 +130,9 @@ def main():
 	potion_true = 0
 
 	while num <= num_of_loc:
+		# random number chosen for monsters		
 		mon_numb = random.randint(1,3)
+		# random number chosen if there is treasure or not
 		treasure_numb = random.randint(0,1)
 				
 		room = d.Location()
@@ -142,6 +153,7 @@ def main():
 			
 			print()
 		else:
+			# optional choices for flourish of player running if initiative won
 			choice = input('Hero wins initiative, Do you wish to skip this fight?(y or n)')
 			if choice == 'y':
 				print('Proceeding in sneak mode to next room...\n')
@@ -187,6 +199,7 @@ def main():
 							print('That was not proper input')
 											
 				if potion_true == 1:
+					# if the potion is used we remove it from the bag
 					potion_remove(hero1)
 			elif selection == '2':
 				os.system('clear')
@@ -202,9 +215,11 @@ def main():
 						
 						monster_check(max_m, max_h, monster, hero1)
 					else:
+						# check made if there was more then one monster_numb
 						if mon_numb > 1:
 							print('\nYou have killed the monster, however there is another monster')
 							mon_numb -= 1
+							# we re-call monster to new random values
 							monster = d.Monster(random.randint(1,3), random.randint(1,3))
 							print('Next monster ->', monster)
 						else:
