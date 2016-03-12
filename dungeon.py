@@ -12,6 +12,7 @@ class Character:
 		dice1 = random.randint(0,6)
 		return dice1
 		
+	# a function to check if  a character is dead
 	def char_death(self):
 		output = 'Dead'
 		if self._health == 0:
@@ -32,6 +33,7 @@ class Monster(Character):
 		super().__init__(monster_name[m_name], health)
 		self._atk = atk
 		
+	# creates a dictionary of random dice based on atk of monster
 	def mon_roll_atk(self):
 		dice_num = 1
 		dict1 = {}
@@ -54,6 +56,7 @@ class Hero(Character):
 	def treasure_find(self, treasure):
 		self._lootbag.append(treasure)
 			
+	# creates a dictionary of 3 random dice value
 	def hero_roll_atk(self):
 		dice1 = random.randint(1,6)
 		dice2 = random.randint(1,6)
